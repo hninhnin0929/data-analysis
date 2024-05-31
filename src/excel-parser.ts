@@ -1,5 +1,6 @@
 import * as XLSX from "xlsx";
 import * as path from "path";
+import * as filterFunctions from "./filter";
 
 function loadAndParseExcel(fileName: string) {
   const filePath = path.join(__dirname, "..", "files", fileName);
@@ -9,25 +10,26 @@ function loadAndParseExcel(fileName: string) {
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     // return XLSX.utils.sheet_to_json(worksheet);
-    const columnNames = ['용역 발주계획목록', '업무', '유형', '발주기관', '발주시기', '조달방식', '계약방법', '용역명', '용역구분', '예산액(원)', '담당부서', '담당자', '연락처'];
+    const columnNames = [
+      "용역 발주계획목록 번호",
+      "업무",
+      "유형",
+      "발주기관",
+      "발주시기",
+      "조달방식",
+      "계약방법",
+      "용역명",
+      "용역구분",
+      "예산액(원)",
+      "담당부서",
+      "담당자",
+      "연락처",
+    ];
     return XLSX.utils.sheet_to_json(worksheet, { header: columnNames });
   } catch (error) {
     console.error("Error loading and parsing Excel file:", error);
     return [];
   }
-}
-
-// Define your filtering logic function
-function applyFilterLogic(data: any[]) {
-
-  return data.filter((row) => {
-    console.log(row); 
-    const value = row["__EMPTY_1"];
-    if (typeof value === 'string') {
-        return value.trim() === "신규1"; // Trim whitespace and fix case
-    }
-    return false; 
-});
 }
 
 function exportToExcel(data: any[], exportFileName: string) {
@@ -39,12 +41,33 @@ function exportToExcel(data: any[], exportFileName: string) {
   console.log(`Filtered data exported to ${exportFilePath}.`);
 }
 
-const excelData = loadAndParseExcel("발주계획_20240531092631.xls");
+// General filter: testing
+function applyFilterLogic(data: any[]) {
+  return data.filter((row) => {
+    // console.log(row);
+    const value = row["유형"];
+    if (typeof value === "string") {
+      return value.trim() === "신규1"; // Trim whitespace and fix case
+    }
+    return false;
+  });
+}
+
+const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse excel data
 // console.log("Excel data:", excelData);
 
 // Apply the filter logic to the Excel data
 const newFilterDatas = applyFilterLogic(excelData);
-console.log("Filtered data:", newFilterDatas);
+exportToExcel(newFilterDatas, "filtered_data.xlsx"); // Export filtered data to Excel
 
-// Export filtered data to Excel
-exportToExcel(newFilterDatas, "filtered_data.xlsx");
+
+// ******************** filter by date range ******************************************
+function filterByDateRange(data: any[], startDate: Date, endDate: Date) {
+  return filterFunctions.filterByDateRange(data, startDate, endDate);
+}
+const startDate = new Date(2024, 4, 1); // May 1, 2024 (Month is zero-based)
+const endDate = new Date(2024, 4, 31); // May 31, 2024
+const filterByDateRangeDatas = filterByDateRange(excelData, startDate, endDate);
+// console.log("filterByDateRangeDatas:", filterByDateRangeDatas);
+exportToExcel(filterByDateRangeDatas, "filterByDateRange.xlsx");
+
