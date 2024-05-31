@@ -133,10 +133,45 @@ export function filterOutliers(data: any[], columnName: string, threshold: numbe
     
             return { ...row, [columnName]: amount };
         }).filter(Boolean); // Remove rows with null values after preprocessing
-        
+
     const mean = processedData.reduce((acc, row) => acc + row[columnName], 0) / data.length;
     const stdDev = Math.sqrt(processedData.reduce((acc, row) => acc + Math.pow(row[columnName] - mean, 2), 0) / data.length);
 
     return processedData.filter((row) => Math.abs(row[columnName] - mean) <= threshold * stdDev);
 }
 //----------------------------------------------------------------------------------------------------------------
+
+// Function to clean data
+export function cleanData(data: any[]) {
+    return data.map(row => {
+        // Example data cleaning operations
+        // Modify or add more cleaning logic as needed
+        const cleanedRow = { ...row };
+
+        // Convert '예산액(원)' values from string to number and remove commas
+        if (typeof cleanedRow['예산액(원)'] === 'string') {
+            cleanedRow['예산액(원)'] = parseInt(cleanedRow['예산액(원)'].replace(/,/g, ''), 10);
+        }
+
+        // Standardize formatting and remove additional spaces
+        Object.keys(cleanedRow).forEach(key => {
+            if (typeof cleanedRow[key] === 'string') {
+                cleanedRow[key] = cleanedRow[key].trim().replace(/\s+/g, ' ');
+            }
+        });
+
+        // Remove duplicates from the entire row
+        // const uniqueRow: { [key: string]: boolean } = {};
+        // Object.keys(cleanedRow).forEach(key => {
+        //     uniqueRow[cleanedRow[key]] = true;
+        // });
+        // Object.keys(uniqueRow).forEach(key => {
+        //     cleanedRow[key] = key;
+        // });
+
+        return cleanedRow;
+    });
+}
+
+// --------------------------------------------------
+

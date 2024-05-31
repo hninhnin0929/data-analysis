@@ -107,5 +107,10 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 
 
 // *********** filter by Pattern ************
-const filterOutliersDatas = filterFunctions.filterOutliers(excelData, '예산액(원)', 2);
-exportToExcel(filterOutliersDatas, "filterOutliersDatas.xlsx");
+// const filterOutliersDatas = filterFunctions.filterOutliers(excelData, '예산액(원)', 2);
+// exportToExcel(filterOutliersDatas, "filterOutliersDatas.xlsx");
+
+
+// *********** clean data ************
+const cleanData = filterFunctions.cleanData(excelData);
+exportToExcel(cleanData, "cleanData.xlsx");
