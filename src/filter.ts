@@ -115,3 +115,28 @@ export function multiCriteriaFilter(data: any[], criteria: { column: string, val
     return data.filter((row) => criteria.every((c) => row[c.column] === c.value));
 }
 //----------------------------------------------------------------------------------------------------
+
+export function filterOutliers(data: any[], columnName: string, threshold: number) {
+        // Preprocess data: convert 'columnName' values to numbers
+        const processedData = data.map(row => {
+            const amountString = row[columnName];
+            if (typeof amountString !== 'string') {
+                console.warn(`Column "${columnName}" is not a string in row:`, row);
+                return null;
+            }
+    
+            const amount = parseInt(amountString.replace(/,/g, ''), 10);
+            if (isNaN(amount)) {
+                console.warn(`Invalid format in column "${columnName}" in row:`, row);
+                return null;
+            }
+    
+            return { ...row, [columnName]: amount };
+        }).filter(Boolean); // Remove rows with null values after preprocessing
+        
+    const mean = processedData.reduce((acc, row) => acc + row[columnName], 0) / data.length;
+    const stdDev = Math.sqrt(processedData.reduce((acc, row) => acc + Math.pow(row[columnName] - mean, 2), 0) / data.length);
+
+    return processedData.filter((row) => Math.abs(row[columnName] - mean) <= threshold * stdDev);
+}
+//----------------------------------------------------------------------------------------------------------------

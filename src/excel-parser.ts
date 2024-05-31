@@ -96,14 +96,16 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 
 
 // *********** filter by multiCriteriaFilter ************
-const budgetValue = 10131000000; // Value without commas
-const budgetValueWithCommas = budgetValue.toLocaleString(); // Convert value to string with commas
-console.log("budgetValueWithCommas =", budgetValueWithCommas);
-const multiCriteriaFilterDatas = filterFunctions.multiCriteriaFilter(excelData, [
-    { column: '계약방법', value: '일반경쟁' },
-    { column: '예산액(원)', value: budgetValueWithCommas }  
-]);
-exportToExcel(multiCriteriaFilterDatas, "multiCriteriaFilterDatas.xlsx");
+// const budgetValue = 10131000000; // Value without commas
+// const budgetValueWithCommas = budgetValue.toLocaleString(); // Convert value to string with commas
+// console.log("budgetValueWithCommas =", budgetValueWithCommas);
+// const multiCriteriaFilterDatas = filterFunctions.multiCriteriaFilter(excelData, [
+//     { column: '계약방법', value: '일반경쟁' },
+//     { column: '예산액(원)', value: budgetValueWithCommas }  
+// ]);
+// exportToExcel(multiCriteriaFilterDatas, "multiCriteriaFilterDatas.xlsx");
 
 
-
+// *********** filter by Pattern ************
+const filterOutliersDatas = filterFunctions.filterOutliers(excelData, '예산액(원)', 2);
+exportToExcel(filterOutliersDatas, "filterOutliersDatas.xlsx");
