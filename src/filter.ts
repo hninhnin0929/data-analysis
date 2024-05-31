@@ -66,14 +66,20 @@ export function filterByThreshold(data: any[], columnName: string, threshold: nu
 
 //--------------------------------------------------------------------------------------
 
-export function filterByFrequency(data: any[], column: string, frequency: number) {
+export function filterByFrequency(data: any[], columnName: string, frequency: number) {
     const counts: Record<string, number> = {};
     data.forEach((row) => {
-        const key = row[column] as unknown as string; 
+        const key = row[columnName] as unknown as string; 
         counts[key] = (counts[key] || 0) + 1;
     });
-    return data.filter((row) => counts[row[column]] >= frequency);
+    return data.filter((row) => counts[row[columnName]] >= frequency);
 }
 // only those rows where the value '신규'  appears more than 50(frequency) times in column '유형'
 //---------------------------------------------------------------------------------------
 
+export function filterByPattern(data: any[], columnName: string, pattern: string) {
+    const regex = new RegExp(pattern, 'i'); // Case-insensitive matching
+    return data.filter((row) => regex.test(row[columnName])); 
+}
+// filters an array of objects based on whether a specified pattern matches the text in a specific column of each object.
+//------------------------------------------------------------------------------------------------------------------

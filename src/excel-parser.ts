@@ -81,5 +81,10 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 
 
 // *********** filter by Threshold ************
-const filterByFrequencyDatas = filterFunctions.filterByFrequency(excelData, '유형', 50);
-exportToExcel(filterByFrequencyDatas, "filterByFrequencyDatas.xlsx");
+// const filterByFrequencyDatas = filterFunctions.filterByFrequency(excelData, '유형', 50);
+// exportToExcel(filterByFrequencyDatas, "filterByFrequencyDatas.xlsx");
+
+
+// *********** filter by Pattern ************
+const filterByPatternDatas = filterFunctions.filterByPattern(excelData, '계약방법', '일반');
+exportToExcel(filterByPatternDatas, "filterByPatternDatas.xlsx");
