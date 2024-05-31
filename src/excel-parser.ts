@@ -71,5 +71,7 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 // // console.log("filterByDateRangeDatas:", filterByDateRangeDatas);
 // exportToExcel(filterByDateRangeDatas, "filterByDateRange.xlsx");
 
+// *********** filter by category ************
 const filterByCategoryDatas = filterFunctions.filterByCategory(excelData, '유형', '장기');// (excelData, column name, data value)
 exportToExcel(filterByCategoryDatas, "filterByCategory.xlsx");
+
