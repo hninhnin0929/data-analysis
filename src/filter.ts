@@ -83,3 +83,31 @@ export function filterByPattern(data: any[], columnName: string, pattern: string
 }
 // filters an array of objects based on whether a specified pattern matches the text in a specific column of each object.
 //------------------------------------------------------------------------------------------------------------------
+
+export function getTopN(data: any[], columnName: string, n: number) {
+    // Preprocess data: convert 'columnName' values to numbers
+    const processedData = data.map(row => {
+        const amountString = row[columnName];
+        if (typeof amountString !== 'string') {
+            console.warn(`Column "${columnName}" is not a string in row:`, row);
+            return null;
+        }
+
+        const amount = parseInt(amountString.replace(/,/g, ''), 10);
+        if (isNaN(amount)) {
+            console.warn(`Invalid format in column "${columnName}" in row:`, row);
+            return null;
+        }
+
+        return { ...row, [columnName]: amount };
+    }).filter(Boolean); // Remove rows with null values after preprocessing
+
+    // Sort the processed data based on the 'columnName' values in descending order
+    processedData.sort((a, b) => b[columnName] - a[columnName]);
+
+    // Return the top N rows
+    return processedData.slice(0, n);
+}
+
+
+//--------------------------------------------------------------------------------------------------------------------

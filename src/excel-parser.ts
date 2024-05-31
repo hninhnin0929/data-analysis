@@ -11,7 +11,7 @@ function loadAndParseExcel(fileName: string) {
     const worksheet = workbook.Sheets[sheetName];
     // return XLSX.utils.sheet_to_json(worksheet);
     const columnNames = [
-      "용역 발주계획목록 번호",
+      "용역 발주계획목록",
       "업무",
       "유형",
       "발주기관",
@@ -86,5 +86,10 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 
 
 // *********** filter by Pattern ************
-const filterByPatternDatas = filterFunctions.filterByPattern(excelData, '계약방법', '일반');
-exportToExcel(filterByPatternDatas, "filterByPatternDatas.xlsx");
+// const filterByPatternDatas = filterFunctions.filterByPattern(excelData, '계약방법', '일반');
+// exportToExcel(filterByPatternDatas, "filterByPatternDatas.xlsx");
+
+// *********** filter by TopN ************
+const getTopNDatas = filterFunctions.getTopN(excelData, '예산액(원)', 3);
+console.log(getTopNDatas);
+exportToExcel(getTopNDatas, "getTopNDatas.xlsx");
