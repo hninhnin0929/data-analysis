@@ -76,5 +76,10 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 // exportToExcel(filterByCategoryDatas, "filterByCategoryDatas.xlsx");
 
 // *********** filter by Threshold ************
-const filterByThresholdDatas = filterFunctions.filterByThreshold(excelData, '예산액(원)', 500000000);
-exportToExcel(filterByThresholdDatas, "filterByThresholdDatas.xlsx");
+// const filterByThresholdDatas = filterFunctions.filterByThreshold(excelData, '예산액(원)', 500000000);
+// exportToExcel(filterByThresholdDatas, "filterByThresholdDatas.xlsx");
+
+
+// *********** filter by Threshold ************
+const filterByFrequencyDatas = filterFunctions.filterByFrequency(excelData, '유형', 50);
+exportToExcel(filterByFrequencyDatas, "filterByFrequencyDatas.xlsx");

@@ -43,7 +43,7 @@ export function filterByCategory(data: any[], columnName: string, category: stri
     return data.filter((row) => row[columnName] === category); 
 }
 
-//-----------------------------------------------------
+//--------------------------------------------------------------------------------
 
 export function filterByThreshold(data: any[], columnName: string, threshold: number) {
 
@@ -64,4 +64,16 @@ export function filterByThreshold(data: any[], columnName: string, threshold: nu
     });
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+export function filterByFrequency(data: any[], column: string, frequency: number) {
+    const counts: Record<string, number> = {};
+    data.forEach((row) => {
+        const key = row[column] as unknown as string; 
+        counts[key] = (counts[key] || 0) + 1;
+    });
+    return data.filter((row) => counts[row[column]] >= frequency);
+}
+// only those rows where the value '신규'  appears more than 50(frequency) times in column '유형'
+//---------------------------------------------------------------------------------------
+
