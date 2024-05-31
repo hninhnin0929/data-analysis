@@ -109,5 +109,9 @@ export function getTopN(data: any[], columnName: string, n: number) {
     return processedData.slice(0, n);
 }
 
-
 //--------------------------------------------------------------------------------------------------------------------
+
+export function multiCriteriaFilter(data: any[], criteria: { column: string, value: any }[]) {
+    return data.filter((row) => criteria.every((c) => row[c.column] === c.value));
+}
+//----------------------------------------------------------------------------------------------------

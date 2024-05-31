@@ -90,6 +90,20 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 // exportToExcel(filterByPatternDatas, "filterByPatternDatas.xlsx");
 
 // *********** filter by TopN ************
-const getTopNDatas = filterFunctions.getTopN(excelData, '예산액(원)', 3);
-console.log(getTopNDatas);
-exportToExcel(getTopNDatas, "getTopNDatas.xlsx");
+// const getTopNDatas = filterFunctions.getTopN(excelData, '예산액(원)', 3);
+// // console.log(getTopNDatas);
+// exportToExcel(getTopNDatas, "getTopNDatas.xlsx");
+
+
+// *********** filter by multiCriteriaFilter ************
+const budgetValue = 10131000000; // Value without commas
+const budgetValueWithCommas = budgetValue.toLocaleString(); // Convert value to string with commas
+console.log("budgetValueWithCommas =", budgetValueWithCommas);
+const multiCriteriaFilterDatas = filterFunctions.multiCriteriaFilter(excelData, [
+    { column: '계약방법', value: '일반경쟁' },
+    { column: '예산액(원)', value: budgetValueWithCommas }  
+]);
+exportToExcel(multiCriteriaFilterDatas, "multiCriteriaFilterDatas.xlsx");
+
+
+
