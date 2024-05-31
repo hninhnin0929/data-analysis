@@ -8,7 +8,9 @@ function loadAndParseExcel(fileName: string) {
     const workbook = XLSX.readFile(filePath);
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
-    return XLSX.utils.sheet_to_json(worksheet);
+    // return XLSX.utils.sheet_to_json(worksheet);
+    const columnNames = ['용역 발주계획목록', '업무', '유형', '발주기관', '발주시기', '조달방식', '계약방법', '용역명', '용역구분', '예산액(원)', '담당부서', '담당자', '연락처'];
+    return XLSX.utils.sheet_to_json(worksheet, { header: columnNames });
   } catch (error) {
     console.error("Error loading and parsing Excel file:", error);
     return [];
@@ -19,7 +21,7 @@ function loadAndParseExcel(fileName: string) {
 function applyFilterLogic(data: any[]) {
 
   return data.filter((row) => {
-    // console.log(row); 
+    console.log(row); 
     const value = row["__EMPTY_1"];
     if (typeof value === 'string') {
         return value.trim() === "신규1"; // Trim whitespace and fix case
