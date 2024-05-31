@@ -36,3 +36,11 @@ function parseKoreanDate(koreanDate: string): Date | null {
         return null;
     }
 }
+//-------------------------------------------------
+
+
+export function filterByCategory(data: any[], columnName: string, category: string) {
+    return data.filter((row) => row[columnName] === category); 
+}
+
+//-----------------------------------------------------

@@ -57,17 +57,19 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 // console.log("Excel data:", excelData);
 
 // Apply the filter logic to the Excel data
-const newFilterDatas = applyFilterLogic(excelData);
-exportToExcel(newFilterDatas, "filtered_data.xlsx"); // Export filtered data to Excel
+// const newFilterDatas = applyFilterLogic(excelData);
+// exportToExcel(newFilterDatas, "filtered_data.xlsx"); // Export filtered data to Excel
 
 
 // ******************** filter by date range ******************************************
-function filterByDateRange(data: any[], startDate: Date, endDate: Date) {
-  return filterFunctions.filterByDateRange(data, startDate, endDate);
-}
-const startDate = new Date(2024, 4, 1); // May 1, 2024 (Month is zero-based)
-const endDate = new Date(2024, 4, 31); // May 31, 2024
-const filterByDateRangeDatas = filterByDateRange(excelData, startDate, endDate);
-// console.log("filterByDateRangeDatas:", filterByDateRangeDatas);
-exportToExcel(filterByDateRangeDatas, "filterByDateRange.xlsx");
+// function filterByDateRange(data: any[], startDate: Date, endDate: Date) {
+//   return filterFunctions.filterByDateRange(data, startDate, endDate);
+// }
+// const startDate = new Date(2024, 4, 1); // May 1, 2024 (Month is zero-based)
+// const endDate = new Date(2024, 4, 31); // May 31, 2024
+// const filterByDateRangeDatas = filterByDateRange(excelData, startDate, endDate);
+// // console.log("filterByDateRangeDatas:", filterByDateRangeDatas);
+// exportToExcel(filterByDateRangeDatas, "filterByDateRange.xlsx");
 
+const filterByCategoryDatas = filterFunctions.filterByCategory(excelData, '유형', '장기');// (excelData, column name, data value)
+exportToExcel(filterByCategoryDatas, "filterByCategory.xlsx");
