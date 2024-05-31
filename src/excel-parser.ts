@@ -61,7 +61,7 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 // exportToExcel(newFilterDatas, "filtered_data.xlsx"); // Export filtered data to Excel
 
 
-// ******************** filter by date range ******************************************
+// ******************** filter by Date range ******************************************
 // function filterByDateRange(data: any[], startDate: Date, endDate: Date) {
 //   return filterFunctions.filterByDateRange(data, startDate, endDate);
 // }
@@ -69,9 +69,12 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 // const endDate = new Date(2024, 4, 31); // May 31, 2024
 // const filterByDateRangeDatas = filterByDateRange(excelData, startDate, endDate);
 // // console.log("filterByDateRangeDatas:", filterByDateRangeDatas);
-// exportToExcel(filterByDateRangeDatas, "filterByDateRange.xlsx");
+// exportToExcel(filterByDateRangeDatas, "filterByDateRangeDatas.xlsx");
 
-// *********** filter by category ************
-const filterByCategoryDatas = filterFunctions.filterByCategory(excelData, '유형', '장기');// (excelData, column name, data value)
-exportToExcel(filterByCategoryDatas, "filterByCategory.xlsx");
+// *********** filter by Category ************
+// const filterByCategoryDatas = filterFunctions.filterByCategory(excelData, '유형', '장기');// (excelData, column name, data value)
+// exportToExcel(filterByCategoryDatas, "filterByCategoryDatas.xlsx");
 
+// *********** filter by Threshold ************
+const filterByThresholdDatas = filterFunctions.filterByThreshold(excelData, '예산액(원)', 500000000);
+exportToExcel(filterByThresholdDatas, "filterByThresholdDatas.xlsx");

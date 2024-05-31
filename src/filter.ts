@@ -44,3 +44,24 @@ export function filterByCategory(data: any[], columnName: string, category: stri
 }
 
 //-----------------------------------------------------
+
+export function filterByThreshold(data: any[], columnName: string, threshold: number) {
+
+    return data.filter((row) => {
+        const amountString = row[columnName];
+        if (typeof amountString !== 'string') {
+            console.warn('amount is not a number string in row:', row);
+            return false;
+        }
+
+        const amount = parseInt(row[columnName].replace(/,/g, ''));
+        if (isNaN(amount)) {
+            console.warn('Invalid format in row:', row);
+            return false;
+        }
+
+        return amount > threshold;
+    });
+}
+
+//-----------------------------------------------------------------------------
