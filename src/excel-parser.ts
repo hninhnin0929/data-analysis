@@ -65,40 +65,40 @@ const cleanData = filterFunctions.cleanData(excelData);
 // exportToExcel(cleanData, "cleanData.xlsx");
 
 // ******************** filter by Date range ******************************************
-// const startDate = new Date(2024, 4, 1); // May 1, 2024 (Month is zero-based)
-// const endDate = new Date(2024, 4, 31); // May 31, 2024
-// const filterByDateRangeDatas = filterFunctions.filterByDateRange(cleanData, startDate, endDate);
-// exportToExcel(filterByDateRangeDatas, "filterByDateRangeDatas.xlsx");
+const startDate = new Date(2024, 4, 1); // May 1, 2024 (Month is zero-based)
+const endDate = new Date(2024, 4, 31); // May 31, 2024
+const filterByDateRangeDatas = filterFunctions.filterByDateRange(cleanData, startDate, endDate);
+exportToExcel(filterByDateRangeDatas, "filterByDateRangeDatas.xlsx");
 
 // *********** filter by Category ************
-// const filterByCategoryDatas = filterFunctions.filterByCategory(cleanData, '유형', '장기');// (excelData, column name, data value)
-// exportToExcel(filterByCategoryDatas, "filterByCategoryDatas.xlsx");
+const filterByCategoryDatas = filterFunctions.filterByCategory(cleanData, '유형', '장기');// (excelData, column name, data value)
+exportToExcel(filterByCategoryDatas, "filterByCategoryDatas.xlsx");
 
 // *********** filter by Threshold ************
-// const filterByThresholdDatas = filterFunctions.filterByThreshold(cleanData, '예산액(원)', 500000000);
-// exportToExcel(filterByThresholdDatas, "filterByThresholdDatas.xlsx");
+const filterByThresholdDatas = filterFunctions.filterByThreshold(cleanData, '예산액(원)', 500000000);
+exportToExcel(filterByThresholdDatas, "filterByThresholdDatas.xlsx");
 
 
 // *********** filter by Frequency ************
-// const filterByFrequencyDatas = filterFunctions.filterByFrequency(excelData, '유형', 50);
-// exportToExcel(filterByFrequencyDatas, "filterByFrequencyDatas.xlsx");
+const filterByFrequencyDatas = filterFunctions.filterByFrequency(excelData, '유형', 50);
+exportToExcel(filterByFrequencyDatas, "filterByFrequencyDatas.xlsx");
 
 
 // *********** filter by Pattern ************
-// const filterByPatternDatas = filterFunctions.filterByPattern(cleanData, '계약방법', '일반');
-// exportToExcel(filterByPatternDatas, "filterByPatternDatas.xlsx");
+const filterByPatternDatas = filterFunctions.filterByPattern(cleanData, '계약방법', '일반');
+exportToExcel(filterByPatternDatas, "filterByPatternDatas.xlsx");
 
 // *********** filter by TopN ************
-// const getTopNDatas = filterFunctions.getTopN(cleanData, '예산액(원)', 3);
-// exportToExcel(getTopNDatas, "getTopNDatas.xlsx");
+const getTopNDatas = filterFunctions.getTopN(cleanData, '예산액(원)', 3);
+exportToExcel(getTopNDatas, "getTopNDatas.xlsx");
 
 
 // *********** filter by multiCriteriaFilter ************
-// const multiCriteriaFilterDatas = filterFunctions.multiCriteriaFilter(cleanData, [
-//     { column: '계약방법', value: '일반경쟁' },
-//     { column: '예산액(원)', value: 10131000000 }  
-// ]);
-// exportToExcel(multiCriteriaFilterDatas, "multiCriteriaFilterDatas.xlsx");
+const multiCriteriaFilterDatas = filterFunctions.multiCriteriaFilter(cleanData, [
+    { column: '계약방법', value: '일반경쟁' },
+    { column: '예산액(원)', value: 10131000000 }  
+]);
+exportToExcel(multiCriteriaFilterDatas, "multiCriteriaFilterDatas.xlsx");
 
 
 // *********** filter by Pattern ************
