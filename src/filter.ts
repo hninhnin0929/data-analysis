@@ -1,4 +1,41 @@
 // filter.ts
+
+// Function to clean data
+export function cleanData(data: any[]) {
+    // Create a map to track unique rows
+    const uniqueRows = new Map<string, boolean>();
+
+    return data
+        .map(row => {
+            const cleanedRow = { ...row };
+
+            // Convert '예산액(원)' values from string to number and remove commas
+            if (typeof cleanedRow['예산액(원)'] === 'string') {
+                cleanedRow['예산액(원)'] = parseInt(cleanedRow['예산액(원)'].replace(/,/g, ''), 10);
+            }
+
+            // Standardize formatting and remove additional spaces
+            Object.keys(cleanedRow).forEach(key => {
+                if (typeof cleanedRow[key] === 'string') {
+                    cleanedRow[key] = cleanedRow[key].trim().replace(/\s+/g, ' ');
+                }
+            });
+
+            return cleanedRow;
+        })
+        .filter(row => {
+            // Create a string representation of the row to check for duplicates
+            const rowString = JSON.stringify(row);
+            if (uniqueRows.has(rowString)) {
+                return false;
+            }
+            uniqueRows.set(rowString, true);
+            return true;
+        });
+}
+
+// --------------------------------------------------
+
 export function filterByDateRange(data: any[], startDate: Date, endDate: Date) {
     return data.filter((row) => {
         const dateString = row['발주시기']; 
@@ -48,18 +85,18 @@ export function filterByCategory(data: any[], columnName: string, category: stri
 export function filterByThreshold(data: any[], columnName: string, threshold: number) {
 
     return data.filter((row) => {
-        const amountString = row[columnName];
-        if (typeof amountString !== 'string') {
-            console.warn('amount is not a number string in row:', row);
-            return false;
-        }
+        // const amountString = row[columnName];
+        // if (typeof amountString !== 'string') {
+        //     console.warn('amount is not a number string in row:', row);
+        //     return false;
+        // }
 
-        const amount = parseInt(row[columnName].replace(/,/g, ''));
-        if (isNaN(amount)) {
-            console.warn('Invalid format in row:', row);
-            return false;
-        }
-
+        // const amount = parseInt(row[columnName].replace(/,/g, ''));
+        // if (isNaN(amount)) {
+        //     console.warn('Invalid format in row:', row);
+        //     return false;
+        // }
+        const amount = parseInt(row[columnName]);
         return amount > threshold;
     });
 }
@@ -88,18 +125,19 @@ export function getTopN(data: any[], columnName: string, n: number) {
     // Preprocess data: convert 'columnName' values to numbers
     const processedData = data.map(row => {
         const amountString = row[columnName];
-        if (typeof amountString !== 'string') {
-            console.warn(`Column "${columnName}" is not a string in row:`, row);
-            return null;
-        }
+        // if (typeof amountString !== 'string') {
+        //     console.warn(`Column "${columnName}" is not a string in row:`, row);
+        //     return null;
+        // }
 
-        const amount = parseInt(amountString.replace(/,/g, ''), 10);
+        // const amount = parseInt(amountString.replace(/,/g, ''), 10);
+        const amount = parseInt(amountString);
         if (isNaN(amount)) {
             console.warn(`Invalid format in column "${columnName}" in row:`, row);
             return null;
         }
 
-        return { ...row, [columnName]: amount };
+        return { ...row, [columnName]: row[columnName] };
     }).filter(Boolean); // Remove rows with null values after preprocessing
 
     // Sort the processed data based on the 'columnName' values in descending order
@@ -120,12 +158,8 @@ export function filterOutliers(data: any[], columnName: string, threshold: numbe
         // Preprocess data: convert 'columnName' values to numbers
         const processedData = data.map(row => {
             const amountString = row[columnName];
-            if (typeof amountString !== 'string') {
-                console.warn(`Column "${columnName}" is not a string in row:`, row);
-                return null;
-            }
-    
-            const amount = parseInt(amountString.replace(/,/g, ''), 10);
+
+            const amount = parseInt(amountString, 10);
             if (isNaN(amount)) {
                 console.warn(`Invalid format in column "${columnName}" in row:`, row);
                 return null;
@@ -141,36 +175,5 @@ export function filterOutliers(data: any[], columnName: string, threshold: numbe
 }
 //----------------------------------------------------------------------------------------------------------------
 
-// Function to clean data
-export function cleanData(data: any[]) {
-    return data.map(row => {
 
-        const cleanedRow = { ...row };
-
-        // Convert '예산액(원)' values from string to number and remove commas
-        if (typeof cleanedRow['예산액(원)'] === 'string') {
-            cleanedRow['예산액(원)'] = parseInt(cleanedRow['예산액(원)'].replace(/,/g, ''), 10);
-        }
-
-        // Standardize formatting and remove additional spaces
-        Object.keys(cleanedRow).forEach(key => {
-            if (typeof cleanedRow[key] === 'string') {
-                cleanedRow[key] = cleanedRow[key].trim().replace(/\s+/g, ' ');
-            }
-        });
-
-        // Remove duplicates from the entire row
-        // const uniqueRow: { [key: string]: boolean } = {};
-        // Object.keys(cleanedRow).forEach(key => {
-        //     uniqueRow[cleanedRow[key]] = true;
-        // });
-        // Object.keys(uniqueRow).forEach(key => {
-        //     cleanedRow[key] = key;
-        // });
-
-        return cleanedRow;
-    });
-}
-
-// --------------------------------------------------
 

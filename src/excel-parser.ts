@@ -60,57 +60,49 @@ const excelData = loadAndParseExcel("발주계획_20240531092631.xls"); // parse
 // const newFilterDatas = applyFilterLogic(excelData);
 // exportToExcel(newFilterDatas, "filtered_data.xlsx"); // Export filtered data to Excel
 
+// *********** clean data ************
+const cleanData = filterFunctions.cleanData(excelData);
+// exportToExcel(cleanData, "cleanData.xlsx");
 
 // ******************** filter by Date range ******************************************
-// function filterByDateRange(data: any[], startDate: Date, endDate: Date) {
-//   return filterFunctions.filterByDateRange(data, startDate, endDate);
-// }
 // const startDate = new Date(2024, 4, 1); // May 1, 2024 (Month is zero-based)
 // const endDate = new Date(2024, 4, 31); // May 31, 2024
-// const filterByDateRangeDatas = filterByDateRange(excelData, startDate, endDate);
-// // console.log("filterByDateRangeDatas:", filterByDateRangeDatas);
+// const filterByDateRangeDatas = filterFunctions.filterByDateRange(cleanData, startDate, endDate);
 // exportToExcel(filterByDateRangeDatas, "filterByDateRangeDatas.xlsx");
 
 // *********** filter by Category ************
-// const filterByCategoryDatas = filterFunctions.filterByCategory(excelData, '유형', '장기');// (excelData, column name, data value)
+// const filterByCategoryDatas = filterFunctions.filterByCategory(cleanData, '유형', '장기');// (excelData, column name, data value)
 // exportToExcel(filterByCategoryDatas, "filterByCategoryDatas.xlsx");
 
 // *********** filter by Threshold ************
-// const filterByThresholdDatas = filterFunctions.filterByThreshold(excelData, '예산액(원)', 500000000);
+// const filterByThresholdDatas = filterFunctions.filterByThreshold(cleanData, '예산액(원)', 500000000);
 // exportToExcel(filterByThresholdDatas, "filterByThresholdDatas.xlsx");
 
 
-// *********** filter by Threshold ************
+// *********** filter by Frequency ************
 // const filterByFrequencyDatas = filterFunctions.filterByFrequency(excelData, '유형', 50);
 // exportToExcel(filterByFrequencyDatas, "filterByFrequencyDatas.xlsx");
 
 
 // *********** filter by Pattern ************
-// const filterByPatternDatas = filterFunctions.filterByPattern(excelData, '계약방법', '일반');
+// const filterByPatternDatas = filterFunctions.filterByPattern(cleanData, '계약방법', '일반');
 // exportToExcel(filterByPatternDatas, "filterByPatternDatas.xlsx");
 
 // *********** filter by TopN ************
-// const getTopNDatas = filterFunctions.getTopN(excelData, '예산액(원)', 3);
-// // console.log(getTopNDatas);
+// const getTopNDatas = filterFunctions.getTopN(cleanData, '예산액(원)', 3);
 // exportToExcel(getTopNDatas, "getTopNDatas.xlsx");
 
 
 // *********** filter by multiCriteriaFilter ************
-// const budgetValue = 10131000000; // Value without commas
-// const budgetValueWithCommas = budgetValue.toLocaleString(); // Convert value to string with commas
-// console.log("budgetValueWithCommas =", budgetValueWithCommas);
-// const multiCriteriaFilterDatas = filterFunctions.multiCriteriaFilter(excelData, [
+// const multiCriteriaFilterDatas = filterFunctions.multiCriteriaFilter(cleanData, [
 //     { column: '계약방법', value: '일반경쟁' },
-//     { column: '예산액(원)', value: budgetValueWithCommas }  
+//     { column: '예산액(원)', value: 10131000000 }  
 // ]);
 // exportToExcel(multiCriteriaFilterDatas, "multiCriteriaFilterDatas.xlsx");
 
 
 // *********** filter by Pattern ************
-// const filterOutliersDatas = filterFunctions.filterOutliers(excelData, '예산액(원)', 2);
-// exportToExcel(filterOutliersDatas, "filterOutliersDatas.xlsx");
+const filterOutliersDatas = filterFunctions.filterOutliers(cleanData, '예산액(원)', 2);
+exportToExcel(filterOutliersDatas, "filterOutliersDatas.xlsx");
 
 
-// *********** clean data ************
-const cleanData = filterFunctions.cleanData(excelData);
-exportToExcel(cleanData, "cleanData.xlsx");
