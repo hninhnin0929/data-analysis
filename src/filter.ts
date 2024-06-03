@@ -144,8 +144,7 @@ export function filterOutliers(data: any[], columnName: string, threshold: numbe
 // Function to clean data
 export function cleanData(data: any[]) {
     return data.map(row => {
-        // Example data cleaning operations
-        // Modify or add more cleaning logic as needed
+
         const cleanedRow = { ...row };
 
         // Convert '예산액(원)' values from string to number and remove commas
