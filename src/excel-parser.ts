@@ -114,7 +114,8 @@ const cleanData = filterFunctions.cleanData(parseDataArr);
 // exportToExcel(cleanData, "cleanData.xls");
 
 // *********** filter by Pattern ************
-const filterByPatternDatas = filterFunctions.filterByPattern(cleanData, '용역명', '해외');
+const patterns = ['해외', '정보', 'PMO'];
+const filterByPatternDatas = filterFunctions.filterByPattern(cleanData, '용역명', patterns);
 exportToExcel(filterByPatternDatas, "filterByPatternDatas.xlsx");
 
 // ******************** filter by Date range ******************************************

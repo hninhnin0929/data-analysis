@@ -114,10 +114,23 @@ export function filterByFrequency(data: any[], columnName: string, frequency: nu
 // only those rows where the value '신규'  appears more than 50(frequency) times in column '유형'
 //---------------------------------------------------------------------------------------
 
-export function filterByPattern(data: any[], columnName: string, pattern: string) {
-    const regex = new RegExp(pattern, 'i'); // Case-insensitive matching
-    return data.filter((row) => regex.test(row[columnName])); 
+// export function filterByPattern(data: any[], columnName: string, pattern: string) {
+//     const regex = new RegExp(pattern, 'i'); // Case-insensitive matching
+//     return data.filter((row) => regex.test(row[columnName])); 
+// }
+export function filterByPattern(data: any[], columnName: string, patterns: string[]) {
+    return data.filter(row => {
+        const cellValue = row[columnName];
+        if (typeof cellValue !== 'string') {
+            console.warn(`Value in column ${columnName} is not a string in row:`, row);
+            return false;
+        }
+
+        const lowerCaseCellValue = cellValue.toLowerCase();
+        return patterns.some(pattern => lowerCaseCellValue.includes(pattern.toLowerCase()));
+    });
 }
+
 // filters an array of objects based on whether a specified pattern matches the text in a specific column of each object.
 //------------------------------------------------------------------------------------------------------------------
 
