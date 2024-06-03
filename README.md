@@ -3,7 +3,7 @@
 npx tsc
 
 2. Run the compiled JavaScript code:
-node dist/excel-parser.js
+node dist/excel-export.js
 
 
 ### Filter Functions ###
@@ -26,6 +26,9 @@ export function filterByFrequency(data: any[], columnName: string, frequency: nu
 ### Pattern Matching Filter:
 export function filterByPattern(data: any[], columnName: string, pattern: string) 
 Filters the data based on a pattern matching in a given column.
+
+### Keyword and Scre Filter:
+export function filterByKeywordScore(data: any[], columnName: string, keywords: Keyword[], minScore: number)
 
 ### Top N Filter:
 export function getTopN(data: any[], columnName: string, n: number) 
