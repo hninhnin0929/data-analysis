@@ -131,6 +131,32 @@ export function filterByPattern(data: any[], columnName: string, patterns: strin
     });
 }
 
+interface Keyword {
+    keyword: string;
+    score: number;
+}
+export function filterByKeywordScore(data: any[], columnName: string, keywords: Keyword[], minScore: number) {
+    return data.filter(row => {
+        const cellValue = row[columnName];
+        if (typeof cellValue !== 'string') {
+            console.warn(`Value in column ${columnName} is not a string in row:`, row);
+            return false;
+        }
+
+        const lowerCaseCellValue = cellValue.toLowerCase();
+        let totalScore = 0;
+
+        keywords.forEach(({ keyword, score }) => {
+            if (lowerCaseCellValue.includes(keyword.toLowerCase())) {
+                totalScore += score;
+            }
+        });
+
+        return totalScore >= minScore;
+    });
+}
+
+
 // filters an array of objects based on whether a specified pattern matches the text in a specific column of each object.
 //------------------------------------------------------------------------------------------------------------------
 

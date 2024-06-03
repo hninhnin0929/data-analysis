@@ -5,14 +5,6 @@ npx tsc
 2. Run the compiled JavaScript code:
 node dist/excel-parser.js
 
-## Requirements
-
-- Node.js installed
-- `exceljs` library installed
-
-```bash
-npm install exceljs
-
 
 ### Filter Functions ###
 ### Date Range Filter:

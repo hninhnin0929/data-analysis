@@ -114,9 +114,21 @@ const cleanData = filterFunctions.cleanData(parseDataArr);
 // exportToExcel(cleanData, "cleanData.xls");
 
 // *********** filter by Pattern ************
-const patterns = ['해외', '정보', 'PMO'];
+const patterns = ['홈페이지', '정보', 'PMO'];
 const filterByPatternDatas = filterFunctions.filterByPattern(cleanData, '용역명', patterns);
 exportToExcel(filterByPatternDatas, "filterByPatternDatas.xlsx");
+
+// *********** filter by KeywordScore, same as pattern filtering ************
+const keywords = [
+  { keyword: '홈페이지', score: 60 },
+  { keyword: '정보', score: 30 },
+  { keyword: '정보', score: 50 }
+];
+
+const minScore = 50;
+
+const filterByKeywordScoreDatas = filterFunctions.filterByKeywordScore(cleanData, '용역명', keywords, minScore);
+exportToExcel(filterByKeywordScoreDatas, "filterByKeywordScoreDatas.xlsx");
 
 // ******************** filter by Date range ******************************************
 // const startDate = new Date(2024, 4, 1); // May 1, 2024 (Month is zero-based)
